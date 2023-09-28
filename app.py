@@ -10,6 +10,7 @@ from openpyxl import Workbook
 import os
 import random
 import string
+import argparse
 
 
 MINE_TYPE_FOR_XLSX = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
@@ -85,6 +86,16 @@ api.add_resource(Square, '/square/<int:num>')
 api.add_resource(Excel, '/excel')
 
 
+def make_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--ip", default="0.0.0.0",
+                        help="Ip of running host")
+    parser.add_argument("-p", "--port", default=4444, help="Port of host")
+    return parser
+
+
+args = make_parser().parse_args()
+
 # driver function
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host=args.ip, port=args.port)
